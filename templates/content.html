@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+
+<title>{% block title %}NBA News Reader{% endblock %}</title>
+
+{% block content %}
+<h2>NBA Daily News - {{ date }}</h2>
+<h3>{{ text }}</h3>
+<form>
+    <button type="submit" formaction="{{ url_for('download', key=date) }}">Download as MP3</button>
+    <button type="submit" formaction="{{ url_for('main') }}">Back to Home</button>
+</form>
+{% endblock %}

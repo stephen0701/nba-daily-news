@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<title>{% block title %}NBA News Reader{% endblock %}</title>
+
+{% block content %}
+<h2>Welcome to NBA Daily News.</h2>
+{% if data %}
+<ul>
+    {% for item in data %}
+    <li><a href="{{ url_for('news', date=item) }}">{{ item }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<h3>No News Available</h3>
+{% endif %}
+{% endblock %}
