@@ -7,6 +7,9 @@ from gtts import gTTS
 
 app = Flask(__name__,
             template_folder='templates')
+
+# initialize leveldb
+news_db = db_utils.init("news.db")
             
 @app.route('/')
 def root():
@@ -45,9 +48,6 @@ def download(key):
     return send_from_directory(directory=path, filename=filename, as_attachment=True)
 
 if __name__ == "__main__":
-
-    # initialize leveldb
-    news_db = db_utils.init("news.db")
     
     # Get the latest news
     key = time.strftime("%Y%m%d")
