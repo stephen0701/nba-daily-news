@@ -41,7 +41,7 @@ def news(date):
     # Render the news website page
     if db_utils.isValid(news_db, date):
         news_content = db_utils.search(news_db, date)
-        print(news_content)
+        # print(news_content)
         return render_template('content.html', date=date, text=news_content)
     else:
         abort(404)
@@ -65,13 +65,17 @@ def download(key):
         filename = generate_mp3(news_db, key)
         
         file_path = os.path.join(current_app.root_path, "audio")
-        print("file path:", file_path)
+        print("file path:{}\{}".format(file_path,filename))
         '''
         if os.path.isfile("{}\{}".format(file_path,filename)):
             return send_from_directory(directory=file_path, filename=filename, as_attachment=True)
         else:
             return redirect(url_for('news', date=key))
         '''
+        if os.path.isfile("{}\{}".format(file_path,filename)):
+            print("The file is found")
+        else:
+            print("The file is not found")
         return redirect(url_for('news', date=key))
     except:
         return redirect(url_for('news', date=key))
