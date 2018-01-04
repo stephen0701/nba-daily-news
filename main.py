@@ -64,12 +64,14 @@ def download(key):
         
         filename = generate_mp3(news_db, key)
         
-        path = os.path.join(current_app.root_path, "audio")
-        return send_from_directory(directory=path, filename=filename, as_attachment=True)
-    
-    except Error as e:
-        print(e)
-        return render_template('content.html', date=date, text=news_content)
+        file_path = os.path.join(current_app.root_path, "audio")
+        print(file_path)
+        if os.path.isfile("{}\{}".format(file_path,filename)):
+            return send_from_directory(directory=file_path, filename=filename, as_attachment=True)
+        else:
+            return redirect(url_for('news', date=key))
+    except:
+        return redirect(url_for('news', date=key))
         
 if __name__ == "__main__":
     
