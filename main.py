@@ -58,15 +58,19 @@ def generate_mp3(db, key):
 # Download audio file from server
 @app.route('/mp3/<string:key>')
 def download(key):
+    try:
+        # initialize leveldb
+        news_db = db_utils.init("news.db")
+        
+        filename = generate_mp3(news_db, key)
+        
+        path = os.path.join(current_app.root_path, "audio")
+        return send_from_directory(directory=path, filename=filename, as_attachment=True)
     
-    # initialize leveldb
-    news_db = db_utils.init("news.db")
-    
-    filename = generate_mp3(news_db, key)
-    
-    path = os.path.join(current_app.root_path, "audio")
-    return send_from_directory(directory=path, filename=filename, as_attachment=True)
-
+    except Error as e:
+        print(e)
+        return render_template('content.html', date=date, text=news_content)
+        
 if __name__ == "__main__":
     
     app.run(debug=False, port=8080)
