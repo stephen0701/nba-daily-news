@@ -1,4 +1,4 @@
-from flask import Flask, render_template, abort, url_for, current_app, send_from_directory
+from flask import Flask, render_template, abort, url_for, current_app, send_from_directory, redirect
 from nba_news_reader import *
 import db_utils
 import os
@@ -65,11 +65,14 @@ def download(key):
         filename = generate_mp3(news_db, key)
         
         file_path = os.path.join(current_app.root_path, "audio")
-        print(file_path)
+        print("file path:", file_path)
+        '''
         if os.path.isfile("{}\{}".format(file_path,filename)):
             return send_from_directory(directory=file_path, filename=filename, as_attachment=True)
         else:
             return redirect(url_for('news', date=key))
+        '''
+        return redirect(url_for('news', date=key))
     except:
         return redirect(url_for('news', date=key))
         
