@@ -64,15 +64,8 @@ def download(key):
         
         filename = generate_mp3(news_db, key)
         
-        file_path = os.path.join(current_app.root_path, "audio")
-        print("file path:{}/{}".format(file_path,filename))
-        
-        if os.path.isfile("{}/{}".format(file_path,filename)):
-            print("The file is found")
-            return send_from_directory(directory=file_path, filename=filename, as_attachment=True)
-        else:
-            print("The file is not found")
-            return redirect(url_for('news', date=key))
+        file_path = os.path.join(current_app.root_path, "audio")        
+        return send_from_directory(directory=file_path, filename=filename, as_attachment=True)
     except:
         return redirect(url_for('news', date=key))
         
